@@ -41,3 +41,38 @@ class Humano inherits Personaje {
   const inteligencia
   override method esInteligente() = inteligencia > 50  
 }
+
+class Ejercito {
+  const integrantes = []
+
+  method invadir(localidad) {
+    if( self.potenciaTotal() > localidad.potenciaTotal())
+      localidad.intentaOcupar(self)
+  }
+
+  method potenciaTotal() = integrantes.sum({i => i.potencialOfensivo()})
+}
+
+class Localidad {
+  var property ocupante 
+  method potenciaTotal() = ocupante.potenciaTotal()
+
+}
+class Aldea inherits Localidad{
+  //var property ocupante
+  var tamanioMax = 3
+
+  
+
+  method intentaOCupar(ejercito){
+    if (ejercito.cuantosIntegrantes() > tamanioMax)
+      ocupante = new Ejercito(
+        integrantes = ejercito.losMasFuertes(10))
+    else
+      ocupante = ejercito    
+  } 
+}
+
+class Ciudad inherits Localidad {
+  override method potenciaTotal() = super() + 300
+}
